@@ -21,6 +21,8 @@ namespace Assets.FantasyInventory.Scripts.Interface
         public AudioSource AudioSource;
         public AudioClip EquipSound;
         public AudioClip RemoveSound;
+        public PlayerStats pStats;
+        public GameSaveManager saveManager;
 
         /// <summary>
         /// Initialize owned items (just for example).

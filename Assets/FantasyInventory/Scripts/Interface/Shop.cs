@@ -21,6 +21,8 @@ namespace Assets.FantasyInventory.Scripts.Interface
         public AudioSource AudioSource;
         public AudioClip TradeSound;
         public AudioClip NoMoney;
+        public PlayerStats pStats;
+        public GameSaveManager saveManager;
 
         public const int SellRatio = 2;
 
@@ -82,30 +84,24 @@ namespace Assets.FantasyInventory.Scripts.Interface
 
         public void Buy()
         {
-            if (GetCurrency(Bag, ItemId.Gold) < SelectedItemParams.Price)
+            if (pStats.pGold < SelectedItemParams.Price)
             {
                 AudioSource.PlayOneShot(NoMoney);
-                Debug.LogWarning("You haven't enought gold!");
+                ItemInfo.Description.text = "You haven't enought gold!";
                 return;
+            } 
+            else if (pStats.pGold >= SelectedItemParams.Price)
+            {
+                AddMoney(-SelectedItemParams.Price);
+                MoveItem(SelectedItem, Trader, Bag);
+                AudioSource.PlayOneShot(TradeSound);
             }
-
-            AddMoney(Bag, -SelectedItemParams.Price, ItemId.Gold);
-            AddMoney(Trader, SelectedItemParams.Price, ItemId.Gold);
-            MoveItem(SelectedItem, Trader, Bag);
-            AudioSource.PlayOneShot(TradeSound);
         }
 
         public void Sell()
         {
-            if (GetCurrency(Trader, ItemId.Gold) < SelectedItemParams.Price / SellRatio)
-            {
-                AudioSource.PlayOneShot(NoMoney);
-                Debug.LogWarning("Trader hasn't enought gold!");
-                return;
-            }
 
-            AddMoney(Bag, SelectedItemParams.Price / SellRatio, ItemId.Gold);
-            AddMoney(Trader, -SelectedItemParams.Price / SellRatio, ItemId.Gold);
+            AddMoney(SelectedItemParams.Price / SellRatio);
             MoveItem(SelectedItem, Bag, Trader);
             AudioSource.PlayOneShot(TradeSound);
         }
@@ -141,23 +137,9 @@ namespace Assets.FantasyInventory.Scripts.Interface
             return currency == null ? 0 : currency.Count;
         }
 
-        private static void AddMoney(ItemContainer inventory, int value, ItemId currencyId)
+        private void AddMoney(int value)
         {
-            var currency = inventory.Items.SingleOrDefault(i => i.Id == currencyId);
-
-            if (currency == null)
-            {
-                inventory.Items.Insert(0, new Item(currencyId, value));
-            }
-            else
-            {
-                currency.Count += value;
-
-                if (currency.Count == 0)
-                {
-                    inventory.Items.Remove(currency);
-                }
-            }
+            pStats.AddGold(value);
         }
     }
 }

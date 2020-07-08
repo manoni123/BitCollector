@@ -6,12 +6,11 @@ using UnityEngine.UI;
 public class PauseManager : MonoBehaviour
 {
     // Start is called before the first frame update
-    public GameObject Inventory, CraftShop;
-    private bool isShown, inventoryShown, craftShopShown;
+    public GameObject Inventory, Shop;
+    private bool isShown, inventoryShown, shopShown;
     void Start()
     {
-        Inventory.SetActive(false);
-      //  CraftShop.SetActive(false);
+
     }
 
     // Update is called once per frame
@@ -31,6 +30,21 @@ public class PauseManager : MonoBehaviour
         else
         {
             Inventory.SetActive(false);
+            Time.timeScale = 1f;
+        }
+    }
+
+    public void ShowShop()
+    {
+        shopShown = !shopShown;
+        if (shopShown)
+        {
+            Shop.SetActive(true);
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            Shop.SetActive(false);
             Time.timeScale = 1f;
         }
     }

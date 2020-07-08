@@ -32,12 +32,14 @@ public class PlayerStats : MonoBehaviour
     {
         pGold += amount;
         saveManager.objects[1]+= amount;
+        saveManager.SavePlayerProgress();
     }
 
     public void AddDiamond(int amount)
     {
         pDiamond += amount;
         saveManager.objects[2]+=amount;
+        saveManager.SavePlayerProgress();
     }
 
     public void GainExp()
