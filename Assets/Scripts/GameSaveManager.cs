@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Assets.FantasyInventory.Scripts.Data;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine;
 public class GameSaveManager : MonoBehaviour
 {
     public List<int> objects = new List<int>();
-    public List<int> inventoryItems = new List<int>();
+    public List<Item> inventoryItems = new List<Item>();
 
     private void Awake()
     {

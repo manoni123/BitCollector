@@ -87,7 +87,7 @@ namespace Assets.FantasyInventory.Scripts.Interface
             if (pStats.pGold < SelectedItemParams.Price)
             {
                 AudioSource.PlayOneShot(NoMoney);
-                ItemInfo.Description.text = "You haven't enought gold!";
+                ItemInfo.Description.text = "You dont have enough gold!";
                 return;
             } 
             else if (pStats.pGold >= SelectedItemParams.Price)

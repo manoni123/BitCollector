@@ -29,25 +29,38 @@ namespace Assets.FantasyInventory.Scripts.Interface
         /// </summary>
         public void Awake()
         {
-            var inventory = new List<Item>
+            var inventory = new List<Item>();
+            for (int i = 0; i < saveManager.inventoryItems.Count; i++)
             {
-                new Item(ItemId.FireballScroll, 1),
-                new Item(ItemId.Flute, 2),
-                new Item(ItemId.Gold, 2000),
-                new Item(ItemId.HealthPotion, 10),
-                new Item(ItemId.IronSword, 1),
-                new Item(ItemId.IvyBow, 1),
-                new Item(ItemId.LeatherArmor, 1),
-                new Item(ItemId.LeatherHelmet, 1),
-                new Item(ItemId.ManaPotion, 2),
-                new Item(ItemId.RoundShield, 1),
-                new Item(ItemId.SilverRing, 2),
-                new Item(ItemId.Spear, 1),
-                new Item(ItemId.StoneAmulet, 1),
-                new Item(ItemId.TwoHandedSword, 1),
-                new Item(ItemId.WoodcutterAxe, 2)
-            };
+                if (saveManager.inventoryItems[i].Id == ItemId.Undefined || saveManager.inventoryItems[i].Count == 0)
+                {
+                    //nothing
+                }
+                else
+                {
+                    inventory.Add(new Item(saveManager.inventoryItems[i].Id, saveManager.inventoryItems[i].Count));
+                }
 
+            }
+            //{
+            //    new Item(saveManager.inventoryItems[0].Id, saveManager.inventoryItems[0].Count),
+            //    new Item(ItemId.Flute, 2),
+            //    new Item(ItemId.HealthPotion, 10),
+            //    new Item(ItemId.IronSword, 1),
+            //    new Item(ItemId.IvyBow, 1),
+            //    new Item(ItemId.LeatherArmor, 1),
+            //    new Item(ItemId.LeatherHelmet, 1),
+            //    new Item(ItemId.ManaPotion, 2),
+            //    new Item(ItemId.RoundShield, 1),
+            //    new Item(ItemId.SilverRing, 2),
+            //    new Item(ItemId.Spear, 1),
+            //    new Item(ItemId.StoneAmulet, 1),
+            //    new Item(ItemId.TwoHandedSword, 1),
+            //    new Item(ItemId.WoodcutterAxe, 2)
+            //};
+
+
+            Debug.Log("List inventory contains " + saveManager.inventoryItems.Count + " amount");
             var equipped = new List<Item>();
 
             Bag.Initialize(ref inventory);
