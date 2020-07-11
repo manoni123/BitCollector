@@ -40,12 +40,14 @@ namespace Assets.FantasyInventory.Scripts.Interface.Elements
 
             foreach (var slot in Slots)
             {
+                Debug.Log("equipped here");
                 var item = FindItem(slot);
 
                 slot.gameObject.SetActive(item == null);
 
                 if (item != null)
                 {
+                    Debug.Log("equipped here2");
                     var inventoryItem = Instantiate(ItemPrefab, Grid).GetComponent<InventoryItem>();
 
                     inventoryItem.Item = item;

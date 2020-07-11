@@ -17,7 +17,8 @@ namespace Assets.FantasyInventory.Scripts.Interface.Elements
         /// <summary>
         /// Either all items are expanded (i.e. item count = 1, so two equal items will be stored as two list elements).
         /// </summary>
-        public bool Expanded;
+        public bool Expanded, isBag, isShop, isEquipment;
+
 
         public abstract void Refresh();
 

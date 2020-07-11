@@ -34,6 +34,10 @@ namespace Assets.FantasyInventory.Scripts.Interface.Elements
         {
             MoveItem(item.Id, from, to);
         }
+        protected void EquipItem(Item item, ItemContainer from, ItemContainer to)
+        {
+            EquipItem(item.Id, from, to);
+        }
 
         protected void SellItems(ItemId id, ItemContainer from)
         {
@@ -72,7 +76,6 @@ namespace Assets.FantasyInventory.Scripts.Interface.Elements
             if (to.Expanded)
             {
                 to.Items.Add(new Item(id, 1));
-                saveManager.inventoryItems.Add(new Item(id, 1));
             }
             else
             {
@@ -81,8 +84,11 @@ namespace Assets.FantasyInventory.Scripts.Interface.Elements
                 if (target == null)
                 {
                     to.Items.Add(new Item(id, 1));
-                    saveManager.inventoryItems.Add(new Item(id, 1));
                     Debug.Log("Created new item to list");
+                    if (from.isShop)
+                    {
+                        saveManager.inventoryItems.Add(new Item(id, 1));
+                    }
                 }
                 else
                 {
@@ -127,7 +133,49 @@ namespace Assets.FantasyInventory.Scripts.Interface.Elements
                     from.Items.Remove(target);
                 }
             }
+            Refresh();
+            from.Refresh();
+            to.Refresh();
+        }
 
+        protected void EquipItem(ItemId id, ItemContainer from, ItemContainer to)
+        {
+            Debug.Log("Enter EquipItem funciton");
+            if (to.Expanded)
+            {
+                to.Items.Add(new Item(id, 1));
+            }
+            else
+            {
+                var target = to.Items.SingleOrDefault(i => i.Id == id);
+
+                if (target == null)
+                {
+                    to.Items.Add(new Item(id, 1));
+                }
+                else
+                {
+                    target.Count++;
+                }
+            }
+
+            if (from.Expanded)
+            {
+                from.Items.Remove(from.Items.Last(i => i.Id == id));
+            }
+            else
+            {
+                var target = from.Items.Single(i => i.Id == id);
+
+                if (target.Count >= 1)
+                {
+                    target.Count--;
+                }
+                else
+                {
+                    from.Items.Remove(target);
+                }
+            }
             Refresh();
             from.Refresh();
             to.Refresh();

@@ -62,12 +62,12 @@ namespace Assets.FantasyInventory.Scripts.Interface
         protected void Start()
         {
             Reset();
-            BuyButton.interactable = SellButton.interactable = false;
+            BuyButton.interactable = SellButton.interactable = true;
 
             // TODO: Assigning static callbacks. Don't forget to set null values when UI will be closed. You can also use events instead.
             InventoryItem.OnItemSelected = SelectItem;
             InventoryItem.OnDragStarted = SelectItem;
-            InventoryItem.OnDragCompleted = InventoryItem.OnDoubleClick = item => { if (Trader.Items.Contains(item)) Buy(); else Sell(); };
+   //         InventoryItem.OnDragCompleted = InventoryItem.OnDoubleClick = item => { if (Trader.Items.Contains(item)) Buy(); else Sell(); };
         }
 
         public void SelectItem(Item item)
@@ -85,6 +85,7 @@ namespace Assets.FantasyInventory.Scripts.Interface
 
         public void Buy()
         {
+            Debug.Log("pressed buy");
             if (pStats.pGold < SelectedItemParams.Price)
             {
                 Debug.Log("clicked button");
@@ -114,20 +115,23 @@ namespace Assets.FantasyInventory.Scripts.Interface
             {
                 ItemInfo.Reset();
                 BuyButton.interactable = SellButton.interactable = false;
+                Debug.Log("buttons go disable4");
             }
             else
             {
                 var item = Items.Params[SelectedItem];
-
+                Debug.Log("buttons go disable");
                 if (!item.Tags.Contains(ItemTag.NotForSale))
                 {
-                    BuyButton.interactable = Trader.Items.Any(i => i.Id == SelectedItem) && GetCurrency(Bag, ItemId.Gold) >= item.Price;
-                    SellButton.interactable = Bag.Items.Any(i => i.Id == SelectedItem) && GetCurrency(Trader, ItemId.Gold) >= item.Price / SellRatio;
+                    BuyButton.interactable = Trader.Items.Any(i => i.Id == SelectedItem) && pStats.pGold >= item.Price;
+                    SellButton.interactable = Bag.Items.Any(i => i.Id == SelectedItem) && pStats.pGold >= item.Price / SellRatio;
+                    Debug.Log("buttons go disable2");
                 }
                 else
                 {
                     ItemInfo.Price.text = null;
                     BuyButton.interactable = SellButton.interactable = false;
+                    Debug.Log("buttons go disable3");
                 }
             }
         }

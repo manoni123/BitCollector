@@ -51,7 +51,7 @@ namespace Assets.FantasyInventory.Scripts.Interface.Elements
             }
 
             var refresh = Items.Select(i => i.Id).SequenceEqual(_hash);
-
+             
             if (refresh && _items.Any())
             {
                 foreach (var button in _items)

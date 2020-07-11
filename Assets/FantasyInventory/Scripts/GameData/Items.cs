@@ -17,7 +17,7 @@ namespace Assets.FantasyInventory.Scripts.GameData
                 new ItemParams
                 {
                     Type = ItemType.Scroll,
-                    Properties = new List<Property> { new Property(PropertyId.MagicDamage, 100) },
+                    Properties = new List<Property> { new Property(PropertyId.PhysicDamage, 100) },
                     Price = 1000
                 }
             },
@@ -27,14 +27,6 @@ namespace Assets.FantasyInventory.Scripts.GameData
                 {
                     Type = ItemType.Loot,
                     Price = 10
-                }
-            },
-            {
-                ItemId.Gold,
-                new ItemParams
-                {
-                    Type = ItemType.Currency,
-                    Tags = new List<ItemTag> { ItemTag.NotForSale }
                 }
             },
             {
@@ -89,7 +81,7 @@ namespace Assets.FantasyInventory.Scripts.GameData
                 new ItemParams
                 {
                     Type = ItemType.Potion,
-                    Properties = new List<Property> { new Property(PropertyId.RestoreMana, 50) },
+                    Properties = new List<Property> { new Property(PropertyId.RestoreHealth, 50) },
                     Price = 200
                 }
             },
@@ -107,7 +99,7 @@ namespace Assets.FantasyInventory.Scripts.GameData
                 new ItemParams
                 {
                     Type = ItemType.Ring,
-                    Properties = new List<Property> { new Property(PropertyId.MagicDefense, 5) },
+                    Properties = new List<Property> { new Property(PropertyId.PhysicDefense, 5) },
                     Price = 500
                 }
             },
@@ -126,7 +118,7 @@ namespace Assets.FantasyInventory.Scripts.GameData
                 new ItemParams
                 {
                     Type = ItemType.Necklace,
-                    Properties = new List<Property> { new Property(PropertyId.MagicDefense, 10) },
+                    Properties = new List<Property> { new Property(PropertyId.PhysicDefense, 10) },
                     Price = 1000
                 }
             },
