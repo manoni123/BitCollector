@@ -4,6 +4,7 @@ using Assets.FantasyInventory.Scripts.Data;
 using Assets.FantasyInventory.Scripts.Enums;
 using Assets.FantasyInventory.Scripts.GameData;
 using Assets.FantasyInventory.Scripts.Interface.Elements;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,7 +23,6 @@ namespace Assets.FantasyInventory.Scripts.Interface
         public AudioClip TradeSound;
         public AudioClip NoMoney;
         public PlayerStats pStats;
-        public GameSaveManager saveManager;
 
         public const int SellRatio = 2;
 
@@ -31,15 +31,16 @@ namespace Assets.FantasyInventory.Scripts.Interface
         /// </summary>
         protected void Awake()
         {
-            var inventory = new List<Item>
+            var inventory = new List<Item>();
+            for (int i = 0; i < saveManager.inventoryItems.Count; i++)
             {
-                new Item(ItemId.Gold, 10000)
+                inventory.Add(new Item(saveManager.inventoryItems[i].Id, saveManager.inventoryItems[i].Count));
+                Debug.Log("addded item to inventory from shop");
             };
 
             var shop = new List<Item>
             {
                 new Item(ItemId.FireballScroll, 10),
-                new Item(ItemId.Gold, 5000),
                 new Item(ItemId.HealthPotion, 10),
                 new Item(ItemId.IronSword, 1),
                 new Item(ItemId.IvyBow, 1),
@@ -86,12 +87,14 @@ namespace Assets.FantasyInventory.Scripts.Interface
         {
             if (pStats.pGold < SelectedItemParams.Price)
             {
+                Debug.Log("clicked button");
                 AudioSource.PlayOneShot(NoMoney);
                 ItemInfo.Description.text = "You dont have enough gold!";
                 return;
             } 
             else if (pStats.pGold >= SelectedItemParams.Price)
             {
+                //TODO add to inventory the bought item
                 AddMoney(-SelectedItemParams.Price);
                 MoveItem(SelectedItem, Trader, Bag);
                 AudioSource.PlayOneShot(TradeSound);
@@ -100,9 +103,8 @@ namespace Assets.FantasyInventory.Scripts.Interface
 
         public void Sell()
         {
-
             AddMoney(SelectedItemParams.Price / SellRatio);
-            MoveItem(SelectedItem, Bag, Trader);
+            SellItems(SelectedItem, Bag);
             AudioSource.PlayOneShot(TradeSound);
         }
 

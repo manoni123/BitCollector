@@ -15,6 +15,7 @@ namespace Assets.FantasyInventory.Scripts.Data
 
         public ItemParams Params
         {
+
             get { return Items.Params[Id]; }
         }
 

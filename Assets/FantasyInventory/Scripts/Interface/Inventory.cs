@@ -22,7 +22,6 @@ namespace Assets.FantasyInventory.Scripts.Interface
         public AudioClip EquipSound;
         public AudioClip RemoveSound;
         public PlayerStats pStats;
-        public GameSaveManager saveManager;
 
         /// <summary>
         /// Initialize owned items (just for example).
@@ -32,15 +31,8 @@ namespace Assets.FantasyInventory.Scripts.Interface
             var inventory = new List<Item>();
             for (int i = 0; i < saveManager.inventoryItems.Count; i++)
             {
-                if (saveManager.inventoryItems[i].Id == ItemId.Undefined || saveManager.inventoryItems[i].Count == 0)
-                {
-                    //nothing
-                }
-                else
-                {
-                    inventory.Add(new Item(saveManager.inventoryItems[i].Id, saveManager.inventoryItems[i].Count));
-                }
-
+                inventory.Add(new Item(saveManager.inventoryItems[i].Id, saveManager.inventoryItems[i].Count));
+                Debug.Log("addded item to inventory");
             }
             //{
             //    new Item(saveManager.inventoryItems[0].Id, saveManager.inventoryItems[0].Count),
@@ -127,6 +119,15 @@ namespace Assets.FantasyInventory.Scripts.Interface
         {
             MoveItem(SelectedItem, Equipment, Bag);
             SelectItem(Equipment.Items.FirstOrDefault(i => i.Id == SelectedItem) ?? Bag.Items.Single(i => i.Id == SelectedItem));
+            AudioSource.PlayOneShot(RemoveSound);
+        }
+
+        public void Use()
+        {
+            if (SelectedItemParams.Type == ItemType.Potion)
+            {
+
+            }
             AudioSource.PlayOneShot(RemoveSound);
         }
 
