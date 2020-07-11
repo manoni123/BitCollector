@@ -24,5 +24,24 @@ public class npcAnimation : MonoBehaviour
             animator.SetTrigger("action");
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.tag == "player")
+        {
+            {
+                gameObject.GetComponent<SpriteRenderer>().sortingOrder = 2;
+            }
+        }
+    }
+    private void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.tag == "player")
+        {
+            {
+                gameObject.GetComponent<SpriteRenderer>().sortingOrder = 0;
+            }
+        }
+    }
 }
 

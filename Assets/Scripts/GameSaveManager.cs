@@ -64,6 +64,11 @@ public class GameSaveManager : MonoBehaviour
         objects[0] = saveFile.playerObjects[0];
         objects[1] = saveFile.playerObjects[1];
         objects[2] = saveFile.playerObjects[2];
+        objects[3] = saveFile.playerObjects[3];
+        objects[4] = saveFile.playerObjects[4];
+        objects[5] = saveFile.playerObjects[5];
+        objects[6] = saveFile.playerObjects[6];
+        objects[7] = saveFile.playerObjects[7];
         if (saveFile.playerInventoryItems.Count > 0)
         {
             for (int i = 0; i < saveFile.playerInventoryItems.Count; i++)
@@ -80,6 +85,12 @@ public class GameSaveManager : MonoBehaviour
         saveFile.playerObjects[0] = objects[0];
         saveFile.playerObjects[1] = objects[1];
         saveFile.playerObjects[2] = objects[2];
+        saveFile.playerObjects[3] = objects[3];
+        saveFile.playerObjects[4] = objects[4];
+        saveFile.playerObjects[5] = objects[5];
+        saveFile.playerObjects[6] = objects[6];
+        saveFile.playerObjects[7] = objects[7];
+
         for (int i = 0; i < inventoryItems.Count; i++)
         {
             if (!saveFile.playerInventoryItems.Any(j => j.Id == inventoryItems[i].Id))

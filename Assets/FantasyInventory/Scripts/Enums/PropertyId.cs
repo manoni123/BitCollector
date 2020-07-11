@@ -7,10 +7,8 @@
     public enum PropertyId
     {
         PhysicDamage    = 0,
-        MagicDamage     = 1,
-        PhysicDefense   = 2,
-        MagicDefense    = 3,
+        PhysicDefense   = 1,
+        AttckSpeed      = 2,
         RestoreHealth   = 4,
-        RestoreMana     = 5
     }
 }

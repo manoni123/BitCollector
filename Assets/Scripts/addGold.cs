@@ -17,7 +17,7 @@ public class addGold : MonoBehaviour
 
     void AddGold()
     {
-        pStats.AddGold(1500);
+        pStats.AddGold(15000);
     }
 }
 
