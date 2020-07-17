@@ -67,7 +67,7 @@ namespace Assets.FantasyInventory.Scripts.Interface
             // TODO: Assigning static callbacks. Don't forget to set null values when UI will be closed. You can also use events instead.
             InventoryItem.OnItemSelected = SelectItem;
             InventoryItem.OnDragStarted = SelectItem;
-            InventoryItem.OnDragCompleted = InventoryItem.OnDoubleClick = item => { if (Bag.Items.Contains(item)) Equip(); else Remove(); };
+        //    InventoryItem.OnDragCompleted = InventoryItem.OnDoubleClick = item => { if (Bag.Items.Contains(item)) Equip(); else Remove(); };
         }
 
         public void SelectItem(Item item)

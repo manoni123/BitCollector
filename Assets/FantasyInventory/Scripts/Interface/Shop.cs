@@ -72,7 +72,9 @@ namespace Assets.FantasyInventory.Scripts.Interface
 
         public void SelectItem(Item item)
         {
+            Debug.Log("enter SelectedItem");
             SelectItem(item.Id);
+            Debug.Log("Actully select item");
         }
 
         public void SelectItem(ItemId itemId)
@@ -123,8 +125,8 @@ namespace Assets.FantasyInventory.Scripts.Interface
                 Debug.Log("buttons go disable");
                 if (!item.Tags.Contains(ItemTag.NotForSale))
                 {
-                    BuyButton.interactable = Trader.Items.Any(i => i.Id == SelectedItem) && pStats.pGold >= item.Price;
-                    SellButton.interactable = Bag.Items.Any(i => i.Id == SelectedItem) && pStats.pGold >= item.Price / SellRatio;
+                    BuyButton.interactable = Trader.Items.Any(i => i.Id == SelectedItem);
+                    SellButton.interactable = Bag.Items.Any(i => i.Id == SelectedItem);
                     Debug.Log("buttons go disable2");
                 }
                 else
