@@ -14,8 +14,14 @@ namespace Assets.FantasyInventory.Scripts.Interface.Elements
         public ItemInfo ItemInfo;
         public GameSaveManager saveManager;
 
+
         protected ItemId SelectedItem;
         protected ItemParams SelectedItemParams;
+
+        private void Awake()
+        {
+      //      inventory = GameObject.Find("Inventory").GetComponent<Inventory>(); 
+        }
 
         public void Start()
         {
@@ -101,6 +107,7 @@ namespace Assets.FantasyInventory.Scripts.Interface.Elements
                             Debug.Log("item add + 1 from moveItem Func");
                         }
                     }
+                    //update player inventory
                 }
             }
 

@@ -22,16 +22,16 @@ namespace Assets.FantasyInventory.Scripts.Interface
         public AudioClip EquipSound;
         public AudioClip RemoveSound;
         public PlayerStats pStats;
+        public List<Item> inventoryItems = new List<Item>();
 
         /// <summary>
         /// Initialize owned items (just for example).
         /// </summary>
         public void Awake()
         {
-            var inventory = new List<Item>();
             for (int i = 0; i < saveManager.inventoryItems.Count; i++)
             {
-                inventory.Add(new Item(saveManager.inventoryItems[i].Id, saveManager.inventoryItems[i].Count));
+                inventoryItems.Add(new Item(saveManager.inventoryItems[i].Id, saveManager.inventoryItems[i].Count));
                 Debug.Log("addded item to inventory");
             }
             //{
@@ -55,7 +55,7 @@ namespace Assets.FantasyInventory.Scripts.Interface
             Debug.Log("List inventory contains " + saveManager.inventoryItems.Count + " amount");
             var equipped = new List<Item>();
 
-            Bag.Initialize(ref inventory);
+            Bag.Initialize(ref inventoryItems);
             Equipment.Initialize(ref equipped);
         }
 
@@ -67,7 +67,31 @@ namespace Assets.FantasyInventory.Scripts.Interface
             // TODO: Assigning static callbacks. Don't forget to set null values when UI will be closed. You can also use events instead.
             InventoryItem.OnItemSelected = SelectItem;
             InventoryItem.OnDragStarted = SelectItem;
-        //    InventoryItem.OnDragCompleted = InventoryItem.OnDoubleClick = item => { if (Bag.Items.Contains(item)) Equip(); else Remove(); };
+      //    InventoryItem.OnDragCompleted = InventoryItem.OnDoubleClick = item => { if (Bag.Items.Contains(item)) Equip(); else Remove(); };
+        }
+
+        private void Update()
+        {
+            inventoryItems = saveManager.inventoryItems;
+        }
+
+        public void PlayerInventoryUpdate(Item item, int count, bool isNew)
+        {
+            for (int i = 0; i < inventoryItems.Count; i++)
+            {
+                if (isNew)
+                {
+                    if (!inventoryItems.Any(j => j.Id == inventoryItems[i].Id))
+                    {
+                        inventoryItems.Add(new Item(item.Id, item.Count));
+                    }
+                }
+                else
+                {
+                    inventoryItems[i].Count += count;
+                }
+            }
+
         }
 
         public void SelectItem(Item item)

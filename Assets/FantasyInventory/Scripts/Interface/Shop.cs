@@ -13,10 +13,10 @@ namespace Assets.FantasyInventory.Scripts.Interface
     /// <summary>
     /// High-level shop inverface.
     /// </summary>
-    public class Shop : ItemWorkspace
+    public class Shop : ShopItemWorkspace
     {
-        public ScrollInventory Trader;
-        public ScrollInventory Bag;
+        public ScrollShop Trader;
+        public ScrollShop Bag;
         public Button BuyButton;
         public Button SellButton;
         public AudioSource AudioSource;
@@ -65,9 +65,17 @@ namespace Assets.FantasyInventory.Scripts.Interface
             BuyButton.interactable = SellButton.interactable = true;
 
             // TODO: Assigning static callbacks. Don't forget to set null values when UI will be closed. You can also use events instead.
-            InventoryItem.OnItemSelected = SelectItem;
+            InventoryItem.OnItemSelectShop = SelectItem;
             InventoryItem.OnDragStarted = SelectItem;
    //         InventoryItem.OnDragCompleted = InventoryItem.OnDoubleClick = item => { if (Trader.Items.Contains(item)) Buy(); else Sell(); };
+        }
+
+        private void Update()
+        {
+            if (gameObject.activeSelf)
+            {
+                Debug.Log("shop active");
+            }
         }
 
         public void SelectItem(Item item)

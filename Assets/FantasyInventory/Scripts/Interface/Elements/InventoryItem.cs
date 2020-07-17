@@ -16,6 +16,7 @@ namespace Assets.FantasyInventory.Scripts.Interface.Elements
         public Image Frame;
         public Text Count;
         public Item Item;
+        public PauseManager pauseManager;
         public string Group;
 
         private GameObject _phantom;
@@ -26,11 +27,13 @@ namespace Assets.FantasyInventory.Scripts.Interface.Elements
         public static Action<Item> OnDoubleClick;
         public static Action<Item> OnDragStarted;
         public static Action<Item> OnDragCompleted;
+        public static Action<Item> OnItemSelectShop;
         public static Action<Item> OnItemSelected;
 
         public void Start()
         {
             Icon.sprite = ImageCollection.Instance.GetIcon(Item.Id);
+            pauseManager = FindObjectOfType<PauseManager>();
         }
 
         /// <summary>
@@ -38,7 +41,14 @@ namespace Assets.FantasyInventory.Scripts.Interface.Elements
         /// </summary>
         public void OnPress()
         {
-            if (OnItemSelected != null)
+            if (pauseManager.shopShown)
+            {
+                if (OnItemSelectShop != null)
+                {
+                    OnItemSelectShop(Item);
+                }
+            }
+            else
             {
                 OnItemSelected(Item);
             }

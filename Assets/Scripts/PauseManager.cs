@@ -7,7 +7,7 @@ public class PauseManager : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject Inventory, Shop;
-    private bool isShown, inventoryShown, shopShown;
+    public bool inventoryShown, shopShown;
     void Start()
     {
 

@@ -8,6 +8,7 @@ TagManager:
   - enemy
   - object
   - npc
+  - shop
   layers:
   - Default
   - TransparentFX
