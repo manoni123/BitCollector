@@ -3,13 +3,17 @@ using Assets.FantasyInventory.Scripts.Interface.Elements;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
 public class GameSaveManager : MonoBehaviour
 {
     public List<int> objects = new List<int>();
+    [Header("inventoryItems")]
     public List<Item> inventoryItems = new List<Item>();
+    [Header("equipmentItems")]
+    public List<Item> equipmentItems = new List<Item>();
     public PlayerStats pStats;
 
     Save saveFile = new Save();

@@ -82,6 +82,7 @@ namespace Assets.FantasyInventory.Scripts.Interface.Elements
             if (to.Expanded)
             {
                 to.Items.Add(new Item(id, 1));
+            //    saveManager.equipmentItems.Add(new Item(id, 1));
             }
             else
             {
@@ -119,9 +120,13 @@ namespace Assets.FantasyInventory.Scripts.Interface.Elements
             {
                 var target = from.Items.Single(i => i.Id == id);
 
-                if (target.Count > 1)
+                if (target.Count > 0)
                 {
                     target.Count--;
+                    if (target.Count == 0)
+                    {
+                        from.Items.Remove(target);
+                    }
                     for (int i = 0; i < saveManager.inventoryItems.Count; i++)
                     {
                         if (target.Id == saveManager.inventoryItems[i].Id)

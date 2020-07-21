@@ -82,6 +82,7 @@ namespace Assets.FantasyInventory.Scripts.Interface.Elements
             if (to.Expanded)
             {
                 to.Items.Add(new Item(id, 1));
+                Debug.Log("Created new item to list");
             }
             else
             {
@@ -94,11 +95,13 @@ namespace Assets.FantasyInventory.Scripts.Interface.Elements
                     if (from.isShop)
                     {
                         saveManager.inventoryItems.Add(new Item(id, 1));
+                        Debug.Log("added item once and list size is: " + saveManager.inventoryItems.Count);
                     }
                 }
                 else
                 {
                     target.Count++;
+                    Debug.Log("Created new item to list");
                     for (int i = 0; i < saveManager.inventoryItems.Count; i++)
                     {
                         if (target.Id == saveManager.inventoryItems[i].Id)

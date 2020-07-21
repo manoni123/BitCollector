@@ -22,7 +22,9 @@ namespace Assets.FantasyInventory.Scripts.Interface
         public AudioClip EquipSound;
         public AudioClip RemoveSound;
         public PlayerStats pStats;
-        public List<Item> inventoryItems = new List<Item>();
+        public bool toInitialize;
+        public List<Item> playerInventory = new List<Item>();
+        public List<Item> playerEquipment = new List<Item>();
 
         /// <summary>
         /// Initialize owned items (just for example).
@@ -31,32 +33,11 @@ namespace Assets.FantasyInventory.Scripts.Interface
         {
             for (int i = 0; i < saveManager.inventoryItems.Count; i++)
             {
-                inventoryItems.Add(new Item(saveManager.inventoryItems[i].Id, saveManager.inventoryItems[i].Count));
-                Debug.Log("addded item to inventory");
+                playerInventory.Add(new Item(saveManager.inventoryItems[i].Id, saveManager.inventoryItems[i].Count));
             }
-            //{
-            //    new Item(saveManager.inventoryItems[0].Id, saveManager.inventoryItems[0].Count),
-            //    new Item(ItemId.Flute, 2),
-            //    new Item(ItemId.HealthPotion, 10),
-            //    new Item(ItemId.IronSword, 1),
-            //    new Item(ItemId.IvyBow, 1),
-            //    new Item(ItemId.LeatherArmor, 1),
-            //    new Item(ItemId.LeatherHelmet, 1),
-            //    new Item(ItemId.ManaPotion, 2),
-            //    new Item(ItemId.RoundShield, 1),
-            //    new Item(ItemId.SilverRing, 2),
-            //    new Item(ItemId.Spear, 1),
-            //    new Item(ItemId.StoneAmulet, 1),
-            //    new Item(ItemId.TwoHandedSword, 1),
-            //    new Item(ItemId.WoodcutterAxe, 2)
-            //};
 
-
-            Debug.Log("List inventory contains " + saveManager.inventoryItems.Count + " amount");
-            var equipped = new List<Item>();
-
-            Bag.Initialize(ref inventoryItems);
-            Equipment.Initialize(ref equipped);
+            Bag.Initialize(ref playerInventory);
+            Equipment.Initialize(ref saveManager.equipmentItems);
         }
 
         protected void Start()
@@ -72,26 +53,34 @@ namespace Assets.FantasyInventory.Scripts.Interface
 
         private void Update()
         {
-            inventoryItems = saveManager.inventoryItems;
+            if (toInitialize)
+            {
+                InitiatePlayerData(saveManager.inventoryItems, playerInventory, Bag);
+                toInitialize = false;
+            }
         }
 
-        public void PlayerInventoryUpdate(Item item, int count, bool isNew)
+        public void InitiatePlayerData(List<Item> listFrom, List<Item> listTo, ScrollInventory type)
         {
-            for (int i = 0; i < inventoryItems.Count; i++)
+            for (int i = 0; i < listFrom.Count; i++)
             {
-                if (isNew)
+                if (listTo.Any(j => j.Id == listFrom[i].Id))
                 {
-                    if (!inventoryItems.Any(j => j.Id == inventoryItems[i].Id))
-                    {
-                        inventoryItems.Add(new Item(item.Id, item.Count));
-                    }
+                    listTo[i].Count = listFrom[i].Count;
                 }
                 else
                 {
-                    inventoryItems[i].Count += count;
+                    listTo.Add(new Item(listFrom[i].Id, 1));
                 }
             }
-
+            for (int i = 0; i < listTo.Count; i++)
+            {
+                if (!listFrom.Any(j => j.Id == listTo[i].Id))
+                {
+                    listTo.Remove(listTo[i]);
+                }
+            }
+            type.Initialize(ref listTo);
         }
 
         public void SelectItem(Item item)

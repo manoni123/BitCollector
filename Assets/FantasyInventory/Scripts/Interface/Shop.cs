@@ -23,6 +23,8 @@ namespace Assets.FantasyInventory.Scripts.Interface
         public AudioClip TradeSound;
         public AudioClip NoMoney;
         public PlayerStats pStats;
+        public Inventory inventory;
+        public List<Item> playerInventory = new List<Item>();
 
         public const int SellRatio = 2;
 
@@ -31,12 +33,10 @@ namespace Assets.FantasyInventory.Scripts.Interface
         /// </summary>
         protected void Awake()
         {
-            var inventory = new List<Item>();
             for (int i = 0; i < saveManager.inventoryItems.Count; i++)
             {
-                inventory.Add(new Item(saveManager.inventoryItems[i].Id, saveManager.inventoryItems[i].Count));
-                Debug.Log("addded item to inventory from shop");
-            };
+                playerInventory.Add(new Item(saveManager.inventoryItems[i].Id, saveManager.inventoryItems[i].Count));
+            }
 
             var shop = new List<Item>
             {
@@ -56,7 +56,7 @@ namespace Assets.FantasyInventory.Scripts.Interface
             };
 
             Trader.Initialize(ref shop);
-            Bag.Initialize(ref inventory);
+            Bag.Initialize(ref playerInventory);
         }
 
         protected void Start()
@@ -72,9 +72,10 @@ namespace Assets.FantasyInventory.Scripts.Interface
 
         private void Update()
         {
-            if (gameObject.activeSelf)
+            if (inventory.toInitialize)
             {
-                Debug.Log("shop active");
+         //       inventory.InitiatePlayerData();
+                inventory.toInitialize = false;
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets.FantasyInventory.Scripts.Interface;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,6 +25,7 @@ public class PauseManager : MonoBehaviour
         inventoryShown = !inventoryShown;
         if (inventoryShown)
         {
+            Inventory.GetComponent<Inventory>().toInitialize = true;
             Inventory.SetActive(true);
             Time.timeScale = 0f;
         }
@@ -39,6 +41,7 @@ public class PauseManager : MonoBehaviour
         shopShown = !shopShown;
         if (shopShown)
         {
+            Inventory.GetComponent<Inventory>().toInitialize = true;
             Shop.SetActive(true);
             Time.timeScale = 0f;
         }
